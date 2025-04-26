@@ -17,13 +17,7 @@ public class Proveedor extends Persona {
         super(idPersona, nombre, correo);
         this.ruc = ruc;
         this.rubro = rubro;
-        this.listaProductos = new ArrayList<>(listaProductos); // Copia defensiva
-    }
-
-    // Método para agregar productos
-    public void agregarProducto(Producto producto) {
-        listaProductos.add(producto);
-        producto.setProveedor(this);  // Relación bidireccional
+        this.listaProductos = new ArrayList<>(listaProductos);
     }
 
     //Getters y Setters
@@ -41,10 +35,25 @@ public class Proveedor extends Persona {
         this.rubro = rubro;
     }
 
-    public List<Producto> getListaProductos() {
-        return listaProductos;
+    //Método para imprimir los proveedores
+    public void imprimirProveedores(Proveedor[] proveedores) {
+        for (int i = 0; i < proveedores.length; i++) {
+            if (proveedores[i] != null) {
+                System.out.println(proveedores[i].toString());
+            }
+        }
     }
-    public void setListaProductos(List<Producto> listaProductos) {
-        this.listaProductos = listaProductos;
+
+    //toString
+    @Override
+    public String toString() {
+        return "Proveedor {" +
+                "idPersona='" + getIdPersona() + '\'' +  // Atributo heredado
+                ", nombre='" + getNombre() + '\'' +     // Atributo heredado
+                ", correo='" + getCorreo() + '\'' +    // Atributo heredado
+                ", ruc='" + ruc + '\'' +
+                ", rubro='" + rubro + '\'' +
+                ", listaProductos=" + listaProductos +
+                '}';
     }
 }
