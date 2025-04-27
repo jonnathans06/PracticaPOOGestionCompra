@@ -1,40 +1,43 @@
 package ec.edu.ups.poo.clases;
 
 public class ProductoTecnologia extends Producto{
-    private double garantia;
-    private String marca;
+    private String gama;
 
     //Constructores
     public ProductoTecnologia() {
     }
 
-    public ProductoTecnologia(String codigo, String nombre, double precioUnitario, Proveedor proveedor, double garantia, String marca) {
+    public ProductoTecnologia(String codigo, String nombre, double precioUnitario, Proveedor proveedor, String gama) {
         super(codigo, nombre, precioUnitario, proveedor);
-        this.garantia = garantia;
-        this.marca = marca;
+        this.gama = gama;
     }
 
     //Getters y Setters
-    public double getGarantia() {
-        return garantia;
+    public String getGama() {
+        return gama;
     }
-    public void setGarantia(double garantia) {
-        this.garantia = garantia;
+    public void setGama(String gama) {
+        this.gama = gama;
     }
 
-    public String getMarca() {
-        return marca;
-    }
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
 
     @Override
     public double calcularCostoEspecial() {
-        if (garantia > 12) {
-            return getPrecioUnitario() * 1.10; // 10% más si tiene garantía extendida
-        } else {
-            return getPrecioUnitario();
+        switch (gama) {
+            case "Baja":
+                return getPrecioUnitario() * 1.05;
+            case "Media":
+                return getPrecioUnitario() * 1.10;
+            case "Alta":
+                return getPrecioUnitario() * 1.15;
+            default:
+                return getPrecioUnitario();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ProductoTecnologia {codigo='" + getCodigo() + "', nombre='" + getNombre() +
+                "', precioUnitario=" + getPrecioUnitario() + ", gama='" + gama + "'}";
     }
 }
