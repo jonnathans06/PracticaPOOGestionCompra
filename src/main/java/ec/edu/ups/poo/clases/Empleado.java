@@ -2,6 +2,7 @@ package ec.edu.ups.poo.clases;
 
 import ec.edu.ups.poo.enums.EstadoSolicitud;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -11,11 +12,16 @@ public class Empleado extends Persona {
     private Departamento departamento;
     private List<SolicitudCompra> solicitudes;
 
+    public Empleado() {
+        this.solicitudes = new ArrayList<>();
+    }
+
     public Empleado(String idPersona, String nombre, String correo, String cedula, String cargo, Departamento departamento) {
         super(idPersona, nombre, correo);
         this.cedula = cedula;
         this.cargo = cargo;
         this.departamento = departamento;
+        this.solicitudes = new ArrayList<>();
     }
 
     //Getter y setters
@@ -50,8 +56,10 @@ public class Empleado extends Persona {
     public SolicitudCompra crearSolicitud(String idSolicitud, GregorianCalendar fecha, List<ItemSolicitud> items) {
         SolicitudCompra solicitud = new SolicitudCompra(idSolicitud, fecha, this);
         for (ItemSolicitud item : items) {
-            solicitud.agregarItem(item);
+            // Extrae el producto y la cantidad para agregar el ítem correctamente
+            solicitud.agregarItem(item.getProducto(), item.getCantidad());
         }
+        this.solicitudes.add(solicitud);// Guarda la solicitud en el historial del empleado
         return solicitud;
     }
 

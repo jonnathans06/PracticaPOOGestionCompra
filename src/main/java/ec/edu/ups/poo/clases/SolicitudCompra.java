@@ -1,12 +1,13 @@
 package ec.edu.ups.poo.clases;
 
 import ec.edu.ups.poo.enums.EstadoSolicitud;
+import ec.edu.ups.poo.interfaces.Calculable;
 
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ArrayList;
 
-public class SolicitudCompra {
+public class SolicitudCompra implements Calculable{
     private String idSolicitud;
     private GregorianCalendar fecha;
     private EstadoSolicitud estado;
@@ -72,11 +73,13 @@ public class SolicitudCompra {
     }
 
     //Metodo que agrega itemsSolicitud
-    public void agregarItem(ItemSolicitud item) {
+    public void agregarItem(Producto producto, int cantidad) {
+        ItemSolicitud item = new ItemSolicitud(producto, cantidad); // Se crea el ítem dentro de SolicitudCompra
         items.add(item);
     }
 
     //Metodo que calcula el total
+    @Override
     public double calcularTotal() {
         double total = 0;
         for (ItemSolicitud item : items) {
@@ -97,5 +100,15 @@ public class SolicitudCompra {
         this.aprobador = aprobador;
     }
 
-
+    @Override
+    public String toString() {
+        return "SolicitudCompra{" +
+                "idSolicitud='" + idSolicitud + '\'' +
+                ", fecha=" + fecha +
+                ", estado=" + estado +
+                ", solicitante=" + solicitante +
+                ", aprobador=" + aprobador +
+                ", items=" + items +
+                '}';
+    }
 }
