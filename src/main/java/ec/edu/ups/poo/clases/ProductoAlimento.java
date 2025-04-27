@@ -23,4 +23,9 @@ public class ProductoAlimento extends Producto {
     public double calcularCostoEspecial() {
         return getPrecioUnitario() * peso;
     }
+    @Override
+    public String toString() {
+        return "ProductoAlimento {codigo='" + getCodigo() + "', nombre='" + getNombre() +
+                "', precioUnitario=" + getPrecioUnitario() + ", peso=" + peso + " kg}";
+    }
 }

@@ -13,7 +13,7 @@ public class Proveedor extends Persona {
         this.listaProductos = new ArrayList<>();
     }
 
-    public Proveedor(String idPersona, String nombre, String correo, String ruc, String rubro, List<Producto> listaProductos) {
+    public Proveedor(String idPersona, String nombre, String correo, String ruc, String rubro) {
         super(idPersona, nombre, correo);
         this.ruc = ruc;
         this.rubro = rubro;
@@ -35,6 +35,11 @@ public class Proveedor extends Persona {
         this.rubro = rubro;
     }
 
+    //Método para agregar productos
+    public void agregarProducto(Producto producto) {
+        listaProductos.add(producto);
+    }
+
     //Método para imprimir los proveedores
     public void imprimirProveedores(Proveedor[] proveedores) {
         for (int i = 0; i < proveedores.length; i++) {
@@ -48,9 +53,9 @@ public class Proveedor extends Persona {
     @Override
     public String toString() {
         return "Proveedor {" +
-                "idPersona='" + getIdPersona() + '\'' +  // Atributo heredado
-                ", nombre='" + getNombre() + '\'' +     // Atributo heredado
-                ", correo='" + getCorreo() + '\'' +    // Atributo heredado
+                "idPersona='" + getIdPersona() + '\'' +
+                ", nombre='" + getNombre() + '\'' +
+                ", correo='" + getCorreo() + '\'' +
                 ", ruc='" + ruc + '\'' +
                 ", rubro='" + rubro + '\'' +
                 ", listaProductos=" + listaProductos +
