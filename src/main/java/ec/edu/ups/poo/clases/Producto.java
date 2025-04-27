@@ -4,7 +4,7 @@ public abstract class Producto {
     private String codigo;
     private String nombre;
     private double precioUnitario;
-    private Proveedor proveedor;
+    private Proveedor proveedor;//quitar
 
     //Constructores
     public Producto() {}
@@ -43,9 +43,8 @@ public abstract class Producto {
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
-
+        
     //Método abstracto
     public abstract double calcularCostoEspecial();
-
 }
 
