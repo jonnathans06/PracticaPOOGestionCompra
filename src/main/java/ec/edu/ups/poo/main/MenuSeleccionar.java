@@ -177,7 +177,9 @@ public class MenuSeleccionar {
             return null;
         }
 
-        Proveedor.imprimirProveedores(proveedores);
+        Proveedor instanciaProveedor = new Proveedor();
+        instanciaProveedor.imprimirProveedores(proveedores);
+
         Proveedor proveedorSeleccionado = null;
 
         while (proveedorSeleccionado == null) {
@@ -325,7 +327,8 @@ public class MenuSeleccionar {
         if (proveedores.isEmpty()) {
             System.out.println("No hay proveedores registrados.");
         } else {
-            Proveedor.imprimirProveedores(proveedores);
+            Proveedor instanciaProveedor = new Proveedor();
+            instanciaProveedor.imprimirProveedores(proveedores);
         }
     }
 
@@ -335,7 +338,8 @@ public class MenuSeleccionar {
         if (productosAlimento.isEmpty()) {
             System.out.println("No hay productos alimenticios registrados.");
         } else {
-            ProductoAlimento.imprimirProductoAlimento(productosAlimento);
+            ProductoAlimento instanciaProductoAlimento = new ProductoAlimento();
+            instanciaProductoAlimento.imprimirProductoAlimento(productosAlimento);
             System.out.println();
         }
 
@@ -343,7 +347,8 @@ public class MenuSeleccionar {
         if (productosTecnologia.isEmpty()) {
             System.out.println("No hay productos de tecnología registrados.");
         } else {
-            ProductoTecnologia.imprimirProductoTecnologia(productosTecnologia);
+            ProductoTecnologia instanciaProductoTecnologia = new ProductoTecnologia();
+            instanciaProductoTecnologia.imprimirProductoTecnologia(productosTecnologia);
         }
     }
 

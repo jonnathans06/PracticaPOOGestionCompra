@@ -27,22 +27,23 @@ public class ProductoAlimento extends Producto {
     }
 
     //Método para imprimir los productos de alimentos
-    public static void imprimirProductoAlimento(List<ProductoAlimento> productoAlimentos) {
+    public void imprimirProductoAlimento(List<ProductoAlimento> productoAlimentos) {
         if (productoAlimentos.isEmpty()) {
             System.out.println("No hay productos de alimentos registrados.");
             return;
         }
         for (int i = 0; i < productoAlimentos.size(); i++) {
             if (productoAlimentos.get(i) != null) {
-                System.out.println("ID: " + productoAlimentos.get(i).getCodigo() +
-                        " | Nombre: " + productoAlimentos.get(i).getNombre() +
-                        " | Precio Unitario: " + productoAlimentos.get(i).getPrecioUnitario() +
-                        " | Peso: " + productoAlimentos.get(i).getPeso() + " kg");
+                System.out.println("ID: " + productoAlimentos.get(i).getCodigo()
+                        + " | Nombre: " + productoAlimentos.get(i).getNombre()
+                        + " | Precio Unitario: " + productoAlimentos.get(i).getPrecioUnitario()
+                        + " | Peso: " + productoAlimentos.get(i).getPeso() + " kg");
             } else {
                 System.out.println("No hay productos de alimentos registrados.");
             }
         }
     }
+
 
     //toString
     @Override
