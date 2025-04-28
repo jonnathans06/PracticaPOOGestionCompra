@@ -16,7 +16,6 @@ public class Persona {
     }
 
     //Getters y Setters
-
     public String getIdPersona() {
         return idPersona;
     }
@@ -37,6 +36,7 @@ public class Persona {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
     //toString
     @Override
     public String toString() {

@@ -12,10 +12,10 @@ public class Empleado extends Persona {
     private Departamento departamento;
     private List<SolicitudCompra> solicitudes;
 
+    //Constructor
     public Empleado() {
         this.solicitudes = new ArrayList<>();
     }
-
     public Empleado(String idPersona, String nombre, String correo, String cedula, String cargo, Departamento departamento) {
         super(idPersona, nombre, correo);
         this.cedula = cedula;
