@@ -23,7 +23,7 @@ Esta aplicación simula un módulo de gestión de compras de un sistema ERP, imp
 ---
 
 ## 🖼️ Diagrama de Clases
-![Diagrama UML de clases](https://github.com/user-attachments/assets/79d91ba6-908d-48ff-85b9-dd30ca29652d "Diagrama de clases del sistema")
+![Diagrama UML de clases](https://github.com/user-attachments/assets/a1792413-743f-4a0a-acd9-0690e0c4fca1)
 
 ---
 ## 🚀 Ejecución
