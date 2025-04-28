@@ -17,7 +17,12 @@ public class Proveedor extends Persona {
         super(idPersona, nombre, correo);
         this.ruc = ruc;
         this.rubro = rubro;
-        this.listaProductos = new ArrayList<>(listaProductos);
+        this.listaProductos = new ArrayList<>();
+    }
+
+    //Método para agregar productos
+    public void agregarProducto(Producto producto) {
+        listaProductos.add(producto);
     }
 
     //Getters y Setters
@@ -35,17 +40,31 @@ public class Proveedor extends Persona {
         this.rubro = rubro;
     }
 
-    //Método para agregar productos
-    public void agregarProducto(Producto producto) {
-        listaProductos.add(producto);
+    public List<Producto> getListaProductos() {
+        return listaProductos;
     }
 
-    //Método para imprimir los proveedores
-    public void imprimirProveedores(Proveedor[] proveedores) {
-        for (int i = 0; i < proveedores.length; i++) {
-            if (proveedores[i] != null) {
-                System.out.println(proveedores[i].toString());
+    public static void imprimirProveedores(List<Proveedor> proveedores) {
+        if (proveedores.isEmpty()) {
+            System.out.println("No hay proveedores registrados.");
+            return;
+        }
+
+        for (Proveedor proveedor : proveedores) {
+            System.out.println();
+            System.out.println("ID: " + proveedor.getIdPersona() +
+                    " | Nombre: " + proveedor.getNombre() +
+                    " | Rubro: " + proveedor.getRubro() + " | Correo: " + proveedor.getCorreo());
+
+            if (proveedor.getListaProductos().isEmpty()) {
+                System.out.println("No hay productos registrados.");
+            } else {
+                System.out.println("Lista Productos: ");
+                for (Producto producto : proveedor.getListaProductos()) {
+                    System.out.print("[ " + producto.getNombre() + " ]" + " ");
+                }
             }
+            System.out.println();
         }
     }
 

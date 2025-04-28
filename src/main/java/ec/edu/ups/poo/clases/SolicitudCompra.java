@@ -100,15 +100,5 @@ public class SolicitudCompra implements Calculable{
         this.aprobador = aprobador;
     }
 
-    @Override
-    public String toString() {
-        return "SolicitudCompra{" +
-                "idSolicitud='" + idSolicitud + '\'' +
-                ", fecha=" + fecha +
-                ", estado=" + estado +
-                ", solicitante=" + solicitante +
-                ", aprobador=" + aprobador +
-                ", items=" + items +
-                '}';
-    }
+
 }

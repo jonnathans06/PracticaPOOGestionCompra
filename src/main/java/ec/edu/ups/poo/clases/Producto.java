@@ -43,7 +43,7 @@ public abstract class Producto {
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
-        
+
     //Método abstracto
     public abstract double calcularCostoEspecial();
 }
