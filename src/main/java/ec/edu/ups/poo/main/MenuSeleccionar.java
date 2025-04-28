@@ -1,7 +1,9 @@
 package ec.edu.ups.poo.main;
 
 import ec.edu.ups.poo.clases.*;
+import ec.edu.ups.poo.enums.EstadoSolicitud;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,6 +14,7 @@ public class MenuSeleccionar {
     private List<ProductoTecnologia> productosTecnologia;
     private List<SolicitudCompra> solicitudes = new ArrayList<>();
     private Scanner sc;
+    private SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 
     public MenuSeleccionar(List<Proveedor> proveedores, List<ProductoAlimento> productosAlimento,
                            List<ProductoTecnologia> productosTecnologia) {
@@ -39,37 +42,359 @@ public class MenuSeleccionar {
 
         switch (opcionGerencia) {
             case 1:
-                //Método 1
+                registrarProveedor();
                 break;
             case 2:
-                //Método 2
+                registrarProducto();
                 break;
             case 3:
-                //Método 3
+                imprimirProveedores();
                 break;
             case 4:
-                //Método 4
+                imprimirProductos();
                 break;
             case 5:
-                //Método 5
+                buscarProveedorId();
                 break;
             case 6:
-                //Método 6
+                buscarProductoAlimentoNombre();
                 break;
             case 7:
-                //Método 7
+                buscarProductoTecnologíaNombre();
                 break;
             case 8:
-                //Método 8
+                buscarSolicitudPorNum();
                 break;
             case 9:
-                //Método 9
+                aprobarRechazarSolicitud(empleadoGerencia);
                 break;
             default:
                 System.out.println("Opción no válida. Intente nuevamente.");
                 break;
         }
     }
+
+    private void registrarProveedor() {
+        System.out.println("-".repeat(37));
+        System.out.println("--Sistema de Creación de Proveedores--");
+        System.out.println("¿Cuántos proveedores desea registrar?");
+        System.out.print("Opción: ");
+        int nProveedores = sc.nextInt();
+        sc.nextLine();
+        System.out.println("-".repeat(37));
+
+        for (int i = 0; i < nProveedores; i++) {
+            Proveedor nP = new Proveedor();
+            System.out.println("REGISTRO DE PROVEEDOR " + (i + 1));
+            System.out.print("Ingrese el ID del proveedor: "); nP.setIdPersona(sc.nextLine());
+            System.out.print("Nombre del proveedor: "); nP.setNombre(sc.nextLine());
+            System.out.print("Ingrese el correo del proveedor: "); nP.setCorreo(sc.nextLine());
+            System.out.print("Ingrese el RUC del proveedor: "); nP.setRuc(sc.nextLine());
+            System.out.print("Ingrese el rubro del proveedor: "); nP.setRubro(sc.nextLine());
+            System.out.println("-".repeat(37));
+            proveedores.add(nP);
+        }
+    }
+
+    private void registrarProducto() {
+        System.out.println("-".repeat(37));
+        System.out.println("--Sistema de Creación de Productos--");
+        System.out.println("1. Crear Producto Alimento");
+        System.out.println("2. Crear Producto Tecnología");
+        System.out.print("Opción: ");
+        int opcionProducto = sc.nextInt();
+        sc.nextLine();
+
+        if (opcionProducto == 1) {
+            registrarProductoAlimento();
+        } else if (opcionProducto == 2) {
+            registrarProductoTecnologia();
+        } else {
+            System.out.println("Opción inválida.");
+        }
+    }
+
+    private void registrarProductoAlimento() {
+        System.out.println("-".repeat(37));
+        System.out.println("--Sistema de Creación de Productos Alimento--");
+        System.out.println("¿Cuántos productos desea registrar?");
+        System.out.print("Opción: ");
+        int nProductos = sc.nextInt();
+        sc.nextLine();
+        System.out.println("-".repeat(37));
+
+        for (int i = 0; i < nProductos; i++) {
+            ProductoAlimento pA = new ProductoAlimento();
+            System.out.println("REGISTRO DE PRODUCTO ALIMENTO " + (i + 1));
+            System.out.print("Ingrese el ID del producto: "); pA.setCodigo(sc.nextLine());
+            System.out.print("Ingrese el nombre del producto: "); pA.setNombre(sc.nextLine());
+            System.out.print("Ingrese el precio del producto: "); pA.setPrecioUnitario(sc.nextDouble());
+            System.out.print("Ingrese el peso del alimento: "); pA.setPeso(sc.nextDouble());
+            sc.nextLine();
+            System.out.println("-".repeat(37));
+
+            Proveedor proveedorSeleccionado = buscarProveedor();
+            if (proveedorSeleccionado != null) {
+                pA.setProveedor(proveedorSeleccionado);
+                proveedorSeleccionado.agregarProducto(pA);
+                System.out.println("Producto agregado al proveedor: " + proveedorSeleccionado.getNombre());
+            }
+            productosAlimento.add(pA);
+        }
+    }
+
+    private void registrarProductoTecnologia() {
+        System.out.println("-".repeat(37));
+        System.out.println("--Sistema de Creación de Productos Tecnología--");
+        System.out.print("Cuántos productos desea registrar: ");
+        int nProductosTecnologia = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < nProductosTecnologia; i++) {
+            ProductoTecnologia pT = new ProductoTecnologia();
+            System.out.print("Ingrese el ID del producto: "); pT.setCodigo(sc.nextLine());
+            System.out.print("Ingrese el nombre del producto: "); pT.setNombre(sc.nextLine());
+            System.out.print("Ingrese el precio del producto: "); pT.setPrecioUnitario(sc.nextDouble());
+            System.out.print("Ingrese la gama del producto: "); sc.nextLine();
+            pT.setGama(sc.nextLine());
+            System.out.println("-".repeat(37));
+
+            Proveedor proveedorSeleccionado = buscarProveedor();
+            if (proveedorSeleccionado != null) {
+                pT.setProveedor(proveedorSeleccionado);
+                proveedorSeleccionado.agregarProducto(pT);
+                System.out.println("Producto agregado al proveedor: " + proveedorSeleccionado.getNombre());
+            }
+
+            productosTecnologia.add(pT);
+        }
+    }
+
+    private Proveedor buscarProveedor() {
+        if (proveedores.isEmpty()) {
+            System.out.println("No hay proveedores registrados. Registre uno primero.");
+            return null;
+        }
+
+        Proveedor.imprimirProveedores(proveedores);
+        Proveedor proveedorSeleccionado = null;
+
+        while (proveedorSeleccionado == null) {
+            System.out.print("Ingrese el ID del proveedor: ");
+            String idProveedor = sc.nextLine();
+
+            for (Proveedor p : proveedores) {
+                if (p.getIdPersona().equals(idProveedor)) {
+                    proveedorSeleccionado = p;
+                    break;
+                }
+            }
+
+            if (proveedorSeleccionado == null) {
+                System.out.println("Proveedor no encontrado. Inténtelo nuevamente.");
+            }
+        }
+        return proveedorSeleccionado;
+    }
+
+    private Proveedor buscarProveedorId() {
+        System.out.println("-".repeat(37));
+        if (proveedores.isEmpty()) {
+            System.out.println("No hay proveedores registrados. Registre uno primero.");
+            return null;
+        }
+
+        Proveedor proveedorSeleccionado = null;
+
+        while (proveedorSeleccionado == null) {
+            System.out.print("Ingrese el ID del proveedor: ");
+            String idProveedor = sc.nextLine();
+
+            for (Proveedor p : proveedores) {
+                if (p.getIdPersona().trim().equals(idProveedor.trim())) {
+                    proveedorSeleccionado = p;
+                    break;
+                }
+            }
+
+            if (proveedorSeleccionado == null) {
+                System.out.println("Proveedor no encontrado. Inténtelo nuevamente.");
+            } else {
+                System.out.println("Proveedor encontrado: " + proveedorSeleccionado.getNombre() + " | " +
+                        "RUC: " + proveedorSeleccionado.getRuc() + " | " +
+                        "Rubro: " + proveedorSeleccionado.getRubro() + " | " +
+                        "Correo: " + proveedorSeleccionado.getCorreo());
+            }
+        }
+        return proveedorSeleccionado;
+    }
+
+    private void buscarSolicitudPorNum() {
+
+        System.out.println("\n--- BUSCAR SOLICITUD POR NÚMERO ---");
+        System.out.print("Ingrese el ID de la solicitud: ");
+        String idSolicitud = sc.nextLine();
+
+        for (SolicitudCompra solicitud : solicitudes) {
+            if (solicitud.getIdSolicitud().equals(idSolicitud)) {
+                System.out.println("\nSolicitud encontrada:");
+                System.out.println("ID: " + solicitud.getIdSolicitud());
+                System.out.println("Fecha: " + formatoFecha.format(solicitud.getFecha().getTime()));
+                System.out.println("Solicitante: " + solicitud.getSolicitante().getNombre());
+                System.out.println("Estado: " + solicitud.getEstado());
+                System.out.println("Items:");
+
+                for (ItemSolicitud item : solicitud.getItems()) {
+                    System.out.println("- " + item.getProducto().getNombre() +
+                            " | Cantidad: " + item.getCantidad() +
+                            " | Subtotal: $" + item.calcularTotal());
+                }
+                System.out.println("Total: $" + solicitud.calcularTotal());
+                return;
+            }
+        }
+        System.out.println("¡Solicitud no encontrada!");
+    }
+
+    private Producto buscarProductoAlimentoNombre() {
+        System.out.println("-".repeat(37));
+        if (productosAlimento.isEmpty()) {
+            System.out.println("No hay productos registrados. Registre uno primero.");
+            return null;
+        }
+
+        ProductoAlimento productoSeleccionado = null;
+
+        while (productoSeleccionado == null) {
+            System.out.print("Ingrese el nombre del producto: ");
+            String nombreProducto = sc.nextLine();
+
+            for (ProductoAlimento p : productosAlimento) {
+                if (p.getNombre().trim().equals(nombreProducto.trim())) {
+                    productoSeleccionado = p;
+                    break;
+                }
+            }
+
+            if (productoSeleccionado == null) {
+                System.out.println("Producto no encontrado. Inténtelo nuevamente.");
+            } else {
+                System.out.println("Producto encontrado: NOMBRE: " + productoSeleccionado.getNombre() + " | " +
+                        "PRECIO UNITARIO: " + productoSeleccionado.getPrecioUnitario() + " | " +
+                        "PROVEEDOR: " + productoSeleccionado.getProveedor().getNombre());
+            }
+        }
+        return productoSeleccionado;
+    }
+
+    private Producto buscarProductoTecnologíaNombre() {
+        System.out.println("-".repeat(37));
+        if (productosTecnologia.isEmpty()) {
+            System.out.println("No hay productos registrados. Registre uno primero.");
+            return null;
+        }
+
+        ProductoTecnologia productoSeleccionado = null;
+
+        while (productoSeleccionado == null) {
+            System.out.print("Ingrese el nombre del producto: ");
+            String nombreProducto = sc.nextLine();
+
+            for (ProductoTecnologia p : productosTecnologia) {
+                if (p.getNombre().trim().equals(nombreProducto.trim())) {
+                    productoSeleccionado = p;
+                    break;
+                }
+            }
+
+            if (productoSeleccionado == null) {
+                System.out.println("Producto no encontrado. Inténtelo nuevamente.");
+            } else {
+                System.out.println("Producto encontrado: " + productoSeleccionado.getNombre() + " | " +
+                        "PRECIO UNITARIO: " + productoSeleccionado.getPrecioUnitario() + " | " +
+                        "PROVEEDOR: " + productoSeleccionado.getProveedor().getNombre());
+            }
+        }
+        return productoSeleccionado;
+    }
+
+    private void imprimirProveedores() {
+        System.out.println("-".repeat(37));
+        System.out.println("--Lista de Proveedores--");
+        if (proveedores.isEmpty()) {
+            System.out.println("No hay proveedores registrados.");
+        } else {
+            Proveedor.imprimirProveedores(proveedores);
+        }
+    }
+
+    private void imprimirProductos() {
+        System.out.println("-".repeat(37));
+        System.out.println("--Lista de Productos Alimenticios--");
+        if (productosAlimento.isEmpty()) {
+            System.out.println("No hay productos alimenticios registrados.");
+        } else {
+            ProductoAlimento.imprimirProductoAlimento(productosAlimento);
+            System.out.println();
+        }
+
+        System.out.println("--Lista de Productos de Tecnología--");
+        if (productosTecnologia.isEmpty()) {
+            System.out.println("No hay productos de tecnología registrados.");
+        } else {
+            ProductoTecnologia.imprimirProductoTecnologia(productosTecnologia);
+        }
+    }
+
+    private SolicitudCompra buscarSolicitud(String idSolicitud) {
+        for (SolicitudCompra solicitud : solicitudes) {
+            if (solicitud.getIdSolicitud().equals(idSolicitud)) {
+                return solicitud;
+            }
+        }
+        return null;
+    }
+
+    private void aprobarRechazarSolicitud(Empleado empleado) {
+        if (solicitudes == null || solicitudes.isEmpty()) {
+            System.out.println("\nNo hay solicitudes registradas.");
+            return;
+        }
+
+
+        System.out.println("\n--- SOLICITUDES PENDIENTES ---");
+        for (SolicitudCompra sc : solicitudes) {
+            if (sc.getEstado() == EstadoSolicitud.PENDIENTE) {
+                System.out.println("ID: " + sc.getIdSolicitud() + " | Solicitante: " +
+                        sc.getSolicitante().getNombre() + " | Total: $" + sc.calcularTotal());
+            }
+        }
+
+        System.out.print("\nIngrese el ID de la solicitud: ");
+        String idSolicitud = sc.nextLine();
+
+        SolicitudCompra solicitud = buscarSolicitud(idSolicitud);
+        if (solicitud == null || solicitud.getEstado() != EstadoSolicitud.PENDIENTE) {
+            System.out.println("Solicitud no válida o ya procesada.");
+            return;
+        }
+
+        System.out.println("1. Aprobar");
+        System.out.println("2. Rechazar");
+        System.out.print("Seleccione una opción: ");
+        int opcion = sc.nextInt();
+        sc.nextLine();
+
+        if (opcion == 1) {
+            empleado.aceptaSolicitud(solicitud);
+            System.out.println("Solicitud aprobada.");
+        } else {
+            empleado.rechazarSolicitud(solicitud);
+            System.out.println("Solicitud rechazada.");
+        }
+    }
+
+//----------------------------------------------------------------------------------
 
     public void menuAnalistaSolicitud(Empleado empleadoSolicitudes) {
         boolean continuar = true;
