@@ -5,6 +5,7 @@ import ec.edu.ups.poo.enums.EstadoSolicitud;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -410,13 +411,13 @@ public class MenuSeleccionar {
 
             switch (opcion) {
                 case 1:
-                    //primer método
+                    crearSolicitudCompra(empleadoSolicitudes);
                     break;
                 case 2:
-                    //segundo método
+                    listarSolicitudes();
                     break;
                 case 3:
-                    //tercer método
+                    buscarSolicitudPorNumero();
                     break;
                 case 4:
                     continuar = false;
@@ -426,4 +427,143 @@ public class MenuSeleccionar {
             }
         }
     }
+
+    private void crearSolicitudCompra(Empleado empleado) {
+        System.out.println("\n--- CREAR SOLICITUD DE COMPRA ---");
+        System.out.print("Ingrese el ID de la solicitud: ");
+        String idSolicitud = sc.nextLine();
+
+        // Solicitar la fecha de la solicitud al usuario
+        System.out.println("Ingrese la fecha de la solicitud (yyyy-mm-dd)");
+        System.out.print("Ingrese el día: ");
+        int dia = sc.nextInt();
+        System.out.print("Ingrese el mes: ");
+        int mes = sc.nextInt() - 1;
+        System.out.print("Ingrese el año: ");
+        int anio = sc.nextInt();
+        sc.nextLine(); // Consumir el salto de línea
+        GregorianCalendar fechaSolicitud = new GregorianCalendar(anio, mes, dia);
+
+
+
+        List<ItemSolicitud> items = new ArrayList<>();
+        boolean agregarMasItems = true;
+
+        while (agregarMasItems) {
+            System.out.println("\nProductos disponibles:");
+            listarProductos(); // Muestra lista de productos registrados
+
+            System.out.print("\nIngrese el código del producto: ");
+            String codigoProducto = sc.nextLine();
+
+            Producto producto = buscarProducto(codigoProducto);
+            if (producto == null) {
+                System.out.println("¡Producto no encontrado!");
+                continue;
+            }
+
+            System.out.print("Ingrese la cantidad: ");
+            int cantidad = sc.nextInt();
+            sc.nextLine();
+
+            items.add(new ItemSolicitud(producto, cantidad));
+
+            System.out.print("¿Desea agregar otro producto? (S/N): ");
+            agregarMasItems = sc.nextLine().equalsIgnoreCase("S");
+        }
+
+        // Crear la solicitud y asignarla al empleado
+        SolicitudCompra solicitud = new SolicitudCompra(idSolicitud, fechaSolicitud, empleado);
+        for (ItemSolicitud item : items) {
+            solicitud.agregarItem(item.getProducto(), item.getCantidad());
+        }
+
+        solicitudes.add(solicitud);
+        System.out.println("\n¡Solicitud creada exitosamente!");
+        System.out.println("Total: $" + solicitud.calcularTotal());
+    }
+
+    private void listarSolicitudes() {
+        if (solicitudes == null || solicitudes.isEmpty()) {
+            System.out.println("\nNo hay solicitudes registradas.");
+            return;
+        }
+
+
+        System.out.println("\n--- LISTA DE SOLICITUDES ---");
+        for (SolicitudCompra solicitud : solicitudes) {
+            System.out.println("ID: " + solicitud.getIdSolicitud());
+            System.out.println("Fecha: " + solicitud.getFecha().getTime());
+            System.out.println("Solicitante: " + solicitud.getSolicitante().getNombre());
+            System.out.println("Estado: " + solicitud.getEstado());
+            System.out.println("Total: $" + solicitud.calcularTotal());
+            System.out.println("--------------------------");
+        }
+    }
+
+    private void buscarSolicitudPorNumero() {
+        System.out.println("\n--- BUSCAR SOLICITUD POR NÚMERO ---");
+        System.out.print("Ingrese el ID de la solicitud: ");
+        String idSolicitud = sc.nextLine();
+
+        for (SolicitudCompra solicitud : solicitudes) {
+            if (solicitud.getIdSolicitud().equals(idSolicitud)) {
+                System.out.println("\nSolicitud encontrada:");
+                System.out.println("ID: " + solicitud.getIdSolicitud());
+                System.out.println("Fecha: " + formatoFecha.format(solicitud.getFecha().getTime()));
+                System.out.println("Solicitante: " + solicitud.getSolicitante().getNombre());
+                System.out.println("Estado: " + solicitud.getEstado());
+                System.out.println("Items:");
+
+                for (ItemSolicitud item : solicitud.getItems()) {
+                    System.out.println("- " + item.getProducto().getNombre() +
+                            " | Cantidad: " + item.getCantidad() +
+                            " | Subtotal: $" + item.calcularTotal());
+                }
+                System.out.println("Total: $" + solicitud.calcularTotal());
+                return;
+            }
+        }
+        System.out.println("¡Solicitud no encontrada!");
+    }
+
+    // Método auxiliar para buscar productos (usado en crearSolicitudCompra)
+    private Producto buscarProducto(String codigo) {
+        for (ProductoAlimento pa : productosAlimento) {
+            if (pa.getCodigo().equals(codigo)) {
+                return pa;
+            }
+        }
+        for (ProductoTecnologia pt : productosTecnologia) {
+            if (pt.getCodigo().equals(codigo)) {
+                return pt;
+            }
+        }
+        return null;
+    }
+
+    // Método auxiliar para listar productos (usado en crearSolicitudCompra)
+    private void listarProductos() {
+        System.out.println("\n--- PRODUCTOS ALIMENTICIOS ---");
+        if (productosAlimento.isEmpty()) {
+            System.out.println("No hay productos registrados.");
+        } else {
+            for (ProductoAlimento pa : productosAlimento) {
+                System.out.println("Código: " + pa.getCodigo() + " | Nombre: " + pa.getNombre() +
+                        " | Precio: $" + pa.getPrecioUnitario());
+            }
+        }
+
+        System.out.println("\n--- PRODUCTOS TECNOLÓGICOS ---");
+        if (productosTecnologia.isEmpty()) {
+            System.out.println("No hay productos registrados.");
+        } else {
+            for (ProductoTecnologia pt : productosTecnologia) {
+                System.out.println("Código: " + pt.getCodigo() + " | Nombre: " + pt.getNombre() +
+                        " | Precio: $" + pt.getPrecioUnitario());
+            }
+        }
+    }
+
+    //GGs
 }
