@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    static List<Proveedor> proveedores = new ArrayList<>();
-    static List<ProductoAlimento> productosAlimento = new ArrayList<>();
-    static List<ProductoTecnologia> productosTecnologia = new ArrayList<>();
+    private static List<Proveedor> proveedores = new ArrayList<>();
+    private static List<ProductoAlimento> productosAlimento = new ArrayList<>();
+    private static List<ProductoTecnologia> productosTecnologia = new ArrayList<>();
     public static void main(String[] args) {
         Departamento departamentoSolicitudes = new Departamento("Dep001", "Solicitudes");
         Departamento departamentoGerencia = new Departamento("Dep002", "Gerencia");
