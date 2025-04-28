@@ -19,7 +19,34 @@ public class App {
         Empleado empleadoGerencia = new Empleado("Emp002", "Maria Sanchez", "mariasanchez@gmail.com",
                 "020202020", "Gerente Compras", departamentoGerencia);
 
-        //Productos y Proveedores por defecto
+        // Crear Proveedores
+        Proveedor proveedorFrutas = new Proveedor("Prov001", "Frutas del Valle", "frutas@gmail.com", "0999999999", "Alimentos");
+        Proveedor proveedorElectronica = new Proveedor("Prov002", "ElectroTech", "electrotech@gmail.com", "0888888888", "Tecnología");
+
+        // Crear Productos de Alimentos
+        ProductoAlimento manzana = new ProductoAlimento("Prod001", "Manzana", 0.50, proveedorFrutas, 1.2);
+        ProductoAlimento naranja = new ProductoAlimento("Prod002", "Naranja", 0.40, proveedorFrutas, 1.5);
+
+        // Crear Productos de Tecnología
+        ProductoTecnologia laptop = new ProductoTecnologia("Prod003", "Laptop", 800.00, proveedorElectronica, "Alta");
+        ProductoTecnologia smartphone = new ProductoTecnologia("Prod004", "Smartphone", 600.00, proveedorElectronica, "Media");
+
+        // Asociar Productos con los Proveedores
+        proveedorFrutas.agregarProducto(manzana);
+        proveedorFrutas.agregarProducto(naranja);
+        proveedorElectronica.agregarProducto(laptop);
+        proveedorElectronica.agregarProducto(smartphone);
+
+        // Agregar Proveedores a la Lista Global
+        proveedores.add(proveedorFrutas);
+        proveedores.add(proveedorElectronica);
+
+        productosAlimento.add(manzana);
+        productosAlimento.add(naranja);
+        productosTecnologia.add(laptop);
+        productosTecnologia.add(smartphone);
+
+        MenuSeleccionar mS = new MenuSeleccionar(proveedores, productosAlimento, productosTecnologia);
 
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
@@ -35,10 +62,10 @@ public class App {
 
             switch (opcionUsuario) {
                 case 1:
-                    //Metodo empleado 1
+                    mS.menuAnalistaSolicitud(empleadoSolicitudes);
                     break;
                 case 2:
-                    //Metodo empleado 2
+                    mS.menuGerenteCompras(empleadoGerencia);
                     break;
             }
             String respuesta;
