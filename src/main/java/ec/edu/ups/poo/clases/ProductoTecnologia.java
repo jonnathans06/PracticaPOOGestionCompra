@@ -22,22 +22,23 @@ public class ProductoTecnologia extends Producto{
     }
 
     //Método para imprimir los productos de tecnología
-    public static void imprimirProductoTecnologia(List<ProductoTecnologia> productoTecnologia) {
+    public void imprimirProductoTecnologia(List<ProductoTecnologia> productoTecnologia) {
         if (productoTecnologia.isEmpty()) {
             System.out.println("No hay productos de alimentos registrados.");
             return;
         }
         for (int i = 0; i < productoTecnologia.size(); i++) {
             if (productoTecnologia.get(i) != null) {
-                System.out.println("ID: " + productoTecnologia.get(i).getCodigo() +
-                        " | Nombre: " + productoTecnologia.get(i).getNombre() +
-                        " | Precio Unitario: " + productoTecnologia.get(i).getPrecioUnitario() +
-                        " | Gama: " + productoTecnologia.get(i).getGama());
+                System.out.println("ID: " + productoTecnologia.get(i).getCodigo()
+                        + " | Nombre: " + productoTecnologia.get(i).getNombre()
+                        + " | Precio Unitario: " + productoTecnologia.get(i).getPrecioUnitario()
+                        + " | Gama: " + productoTecnologia.get(i).getGama());
             } else {
                 System.out.println("No hay productos de tecnología registrados.");
             }
         }
     }
+
 
     @Override
     public double calcularCostoEspecial() {

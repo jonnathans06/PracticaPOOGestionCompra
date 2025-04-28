@@ -44,29 +44,30 @@ public class Proveedor extends Persona {
         return listaProductos;
     }
 
-    public static void imprimirProveedores(List<Proveedor> proveedores) {
+    public void imprimirProveedores(List<Proveedor> proveedores) {
         if (proveedores.isEmpty()) {
             System.out.println("No hay proveedores registrados.");
             return;
         }
-
         for (Proveedor proveedor : proveedores) {
             System.out.println();
-            System.out.println("ID: " + proveedor.getIdPersona() +
-                    " | Nombre: " + proveedor.getNombre() +
-                    " | Rubro: " + proveedor.getRubro() + " | Correo: " + proveedor.getCorreo());
+            System.out.println("ID: " + proveedor.getIdPersona()
+                    + " | Nombre: " + proveedor.getNombre()
+                    + " | Rubro: " + proveedor.getRubro()
+                    + " | Correo: " + proveedor.getCorreo());
 
             if (proveedor.getListaProductos().isEmpty()) {
                 System.out.println("No hay productos registrados.");
             } else {
                 System.out.println("Lista Productos: ");
                 for (Producto producto : proveedor.getListaProductos()) {
-                    System.out.print("[ " + producto.getNombre() + " ]" + " ");
+                    System.out.print("[ " + producto.getNombre() + " ] ");
                 }
             }
             System.out.println();
         }
     }
+
 
     //toString
     @Override
