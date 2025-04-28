@@ -24,7 +24,7 @@ public class ProductoTecnologia extends Producto{
     //Método para imprimir los productos de tecnología
     public void imprimirProductoTecnologia(List<ProductoTecnologia> productoTecnologia) {
         if (productoTecnologia.isEmpty()) {
-            System.out.println("No hay productos de alimentos registrados.");
+            System.out.println("No hay productos de tecnologícos registrados.");
             return;
         }
         for (int i = 0; i < productoTecnologia.size(); i++) {
